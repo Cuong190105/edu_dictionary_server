@@ -1,0 +1,24 @@
+.submit {
+    margin: 10px;
+    width: 8em;
+    height: 2.5em;
+    background-color: #2ed573;
+    color: white;
+    border-radius: 3em;
+    border: none;
+}
+
+.forget-credentials {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.forget-credentials a {
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+    margin: 0 10px;
+    color: var(--dark-blue);
+}

@@ -1,0 +1,31 @@
+.forget-select {
+    display: none;
+}
+
+.form-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.option {
+    display: flex;
+    box-sizing: border-box;
+    width: 150px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--dark-blue);
+    border-radius: 10px;
+}
+
+.option:hover {
+    background-color: var(--light-gray);
+}
+
+
+.forget-select:checked + label > .option {
+    color: var(--white);
+    background-color: var(--dark-blue);
+}
