@@ -145,12 +145,12 @@ class UserController extends Controller
             if ($oldPath != "avatar/default.jpg" && Storage::disk('local')->exists($oldPath)) {
                 Storage::disk('local')->delete($oldPath);
             }
-            $user->profile_picture = $file;
+            $user->avatar = $file;
             $user->save();
     
             return response()->json([
                 'message' => 'Profile picture updated successfully',
-                'profile_picture' => $user->profile_picture,
+                'avatar' => $user->avatar,
             ]);
         } catch (ValidationException $e) {
             return response()->json([

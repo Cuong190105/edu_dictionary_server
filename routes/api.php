@@ -10,7 +10,12 @@ use App\Http\Controllers\VocabController;
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        $user = $request->user();
+        return response()->json([
+            "name" => $user->name,
+            "email" => $user->email,
+            "avatar" => $user->avatar,
+        ]);
     });
     Route::get('/user/avatar', [DownloadController::class, 'downloadAvatar']);
     Route::post('/user/changeAvatar', [UserController::class, 'updateAvatar']);
