@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
-            $table->foreginId('user_id')->index();
+            $table->integer('user_id')->index();
             $table->integer('word_id');
             $table->string('word', 100);
             $table->text('definition');
@@ -35,7 +35,7 @@ return new class extends Migration
 
         Schema::create('flashcard_sets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index();
+            $table->integer('user_id')->index();
             $table->integer('set_id');
             $table->string('name', 100);
             $table->string('description', 256);

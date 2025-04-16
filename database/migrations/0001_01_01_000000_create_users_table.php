@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('avataravatar');
+            $table->string('avatar');
             $table->integer('streak')->default(0);
             $table->timestamps();
         });
