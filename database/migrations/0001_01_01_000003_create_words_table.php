@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::table('words', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index();
             $table->integer('word_id');
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->unique(['user_id', 'word_id'], 'user_word_unique');
         });
 
-        Schema::create('flashcard_sets', function (Blueprint $table) {
+        Schema::table('flashcard_sets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index();
             $table->integer('set_id');
