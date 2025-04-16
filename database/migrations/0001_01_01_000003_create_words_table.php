@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->index();
             $table->integer('word_id');
             $table->string('word', 100);
+            $table->string('type', 20);
             $table->text('definition');
             $table->text('example');
             $table->string('us_ipa', 100);

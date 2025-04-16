@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('/user/changeEmail', [UserController::class, 'updateEmail']);
     Route::post('/user/changePassword', [UserController::class, 'updatePassword']);
     Route::post('/user/changeName', [UserController::class, 'updateName']);
-
+    Route::post('/user/changeStreak', [UserController::class, 'updateStreak']);
     Route::post('/sync/uploadFlashcards', [FlashcardController::class, 'uploadCardSets']);
     Route::get('/sync/downloadFlashcards', [FlashcardController::class, 'downloadCardSets']);
     Route::post('/sync/uploadWords', [VocabController::class, 'uploadWords']);

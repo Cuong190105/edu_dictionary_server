@@ -26,6 +26,7 @@ class VocabController extends Controller
                     'word_id' => 'required|int',
                     'deleted' => 'required|boolean',
                     'word' => 'string',
+                    'type' => 'string',
                     'definition' => 'string',
                     'example' => 'array',
                     'example.*' => 'string',
@@ -116,6 +117,7 @@ class VocabController extends Controller
                             ],
                             [
                                 'word' => $change["word"],
+                                'type' => $change["type"],
                                 'definition' => $change["definition"],
                                 'example' => implode(SEPARATOR, $change["example"]),
                                 'us_ipa' => $change["us_ipa"],
@@ -156,6 +158,7 @@ class VocabController extends Controller
                         'word_id' => $word->word_id,
                         'deleted' => false,
                         'word' => $word->word,
+                        'type' => $word->type,
                         'definition' => $word->definition,
                         'example' => explode(SEPARATOR, $word->example),
                         'us_ipa' => $word->us_ipa,

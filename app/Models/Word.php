@@ -13,6 +13,7 @@ class Word extends Model
         'user_id',
         'word_id',
         'word',
+        'type',
         'definition',
         'example',
         'us_ipa',
