@@ -31,7 +31,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(['user_id', 'word_id'], 'user_word_unique');
+            $table->unique(['user_id', 'word_id', 'created_at'], 'user_word_time_unique');
         });
 
         Schema::create('flashcard_sets', function (Blueprint $table) {

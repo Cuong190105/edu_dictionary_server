@@ -114,6 +114,7 @@ class VocabController extends Controller
                             [
                                 'user_id' => $request->user()->id,
                                 'word_id' => $change["word_id"],
+                                'created_at' => $change["created_at"],
                             ],
                             [
                                 'word' => $change["word"],
@@ -170,10 +171,12 @@ class VocabController extends Controller
                         'antonyms' => explode(SEPARATOR, $word->antonyms),
                         'family' => explode(SEPARATOR, $word->family),
                         'phrases' => explode(SEPARATOR, $word->phrases),
+                        'created_at' => $word->created_at,
                     );
                 } else {
                     $response[] = array(
                         'word_id' => $word->word_id,
+                        'created_at' => $word->created_at,
                         'deleted' => true,
                     );
                 }

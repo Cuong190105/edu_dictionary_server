@@ -39,6 +39,7 @@ class FlashcardController extends Controller
                     [
                         'user_id' => $user_id,
                         'set_id' => $set['set_id'],
+                        'created_at' => $set['created_at'],
                     ],
                     [
                         'name' => $set['name'],
@@ -72,6 +73,7 @@ class FlashcardController extends Controller
                     'name' => $set->name,
                     'description' => $set->description,
                     'cards' => json_decode($set->cards, true),
+                    'created_at' => $set->created_at,
                 ];
             });
             return response()->json($sets);
