@@ -17,7 +17,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/bootstrap.js',
                 'resources/js/searchfunction.js',
-                'resources/css/verified-notice.css',
+                // 'resources/css/verified-notice.css',
             ],
             refresh: true,
         }),

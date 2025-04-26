@@ -1,8 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Email Verification')
-@section('style')
-    @vite('resources/css/verified-notice.css')
-@endsection
 @section('content')
     <div class="container">
         <div class="verified-notice">
