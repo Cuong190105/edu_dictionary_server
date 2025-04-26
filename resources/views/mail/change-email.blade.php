@@ -11,7 +11,7 @@
         <p>Xin chào, {{ $name }},</p>
         <p>Nhấn vào nút dưới đây để xác nhận thay đổi địa chỉ Email của bạn sang địa chỉ này.</p>
     </div>
-    <a href="{{ $url }}" style="background: #4a69bd; color: white; padding: 20px 20px; text-decoration: None">Xác nhận thay đổi</a>
+    <a href="{{ $url }}" style="background: #4a69bd; color: white; box-sizing:border-box; padding: 20px 20px; text-decoration: None">Xác nhận thay đổi</a>
     <div class="text">
         <p>Nếu bạn vô tình nhận được thư này mà không dùng dịch vụ, hoặc không có ý định thay đổi, vui lòng bỏ qua thư.</p>
         <p>Nếu có vấn đề nhấn vào nút trên, sử dụng liên kết dưới đây</p>
