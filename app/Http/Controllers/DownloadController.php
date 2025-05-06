@@ -43,4 +43,15 @@ class DownloadController extends Controller
             ], 500);
         }
     }
+
+    public function downloadLogs(Request $request) {
+        try {
+            return response()->download(storage_path('logs/laravel.log'));
+        } catch (Exception $e) {
+            Log::error($e);
+            return response()->json([
+                "message" => "Internal error",
+            ], 500);
+        }
+    }
 }
