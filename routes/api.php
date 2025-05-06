@@ -13,10 +13,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/user', function (Request $request) {
         $user = $request->user();
+        $avt = $user->avatar;
+        if ($avt == null) {
+            $avt = "";
+        }
         return response()->json([
             "name" => $user->name,
             "email" => $user->email,
-            "avatar" => $user->avatar,
+            "avatar" => $avt,
         ]);
     });
     Route::get('/user/avatar', [DownloadController::class, 'downloadAvatar']);

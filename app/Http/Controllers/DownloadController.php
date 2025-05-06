@@ -35,7 +35,7 @@ class DownloadController extends Controller
     public function downloadAvatar(Request $request) {
         try {
             $user = $request->user();
-            if ($user->avatar == null) {
+            if ($user->avatar == "") {
                 return response()->download(storage_path('app/immutables/defaultAvatar.jpg'));
             }
             return response()->download(storage_path('app/private/' . $user->avatar));
