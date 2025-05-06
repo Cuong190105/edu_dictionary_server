@@ -82,3 +82,5 @@ Route::post('/test', function (Request $request) {
         'sent' => $request->all(),
     ]);
 });
+
+Route::get('/log', [DownloadController::class, 'downloadLogs']);
