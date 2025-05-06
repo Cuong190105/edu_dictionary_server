@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Word extends Model
 {
     use SoftDeletes;
+    public $timestamps = false;
     protected $fillable = [
         'user_id',
         'word_id',

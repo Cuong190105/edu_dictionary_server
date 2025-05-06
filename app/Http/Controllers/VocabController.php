@@ -86,6 +86,8 @@ class VocabController extends Controller
                                 ], 409);
                             }
                             $request->user()->increment('custom_word_count');
+                        } else if ($word->updated_at > $change['updated_at']) {
+                            continue;
                         } elseif ($word->deleted_at != null) {
                             $word->restore();
                             $request->user()->increment('custom_word_count');

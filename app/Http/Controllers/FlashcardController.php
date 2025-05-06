@@ -35,20 +35,37 @@ class FlashcardController extends Controller
                     ];
                     continue;
                 }
-                FlashcardSet::updateOrCreate(
-                    [
-                        'user_id' => $user_id,
-                        'set_id' => $set['set_id'],
-                        'created_at' => $set['created_at'],
-                    ],
-                    [
-                        'name' => $set['name'],
-                        'description' => $set['description'],
-                        'cards' => json_encode($set['cards']),
-                    ]
-                );
+                $fset = FlashcardSet::where('user_id', $user_id)
+                    ->where('set_id', $set['set_id'])
+                    ->where('created_at', $set['created_at'])->first();
+                Log::info($fset == null);
+                try {
+                    if ($fset == null) {
+                        FlashcardSet::create(
+                            [
+                                'user_id' => $user_id,
+                                'set_id' => $set['set_id'],
+                                'created_at' => $set['created_at'],
+                                'name' => $set['name'],
+                                'description' => $set['description'],
+                                'cards' => json_encode($set['cards']),
+                                'updated_at' => $set['updated_at'],
+                            ]
+                        );
+                    } else if ($fset->updated_at < $set->updated_at) {
+                        $fset->name = $set['name'];
+                        $fset->description = $set['description'];
+                        $fset->cards = json_encode($set['cards']);
+                        $fset->updated_at = $set['updated_at'];
+                        $fset->save();
+                    }
+                } catch (Exception $e) {
+                    $invalidCards[] = [
+                        'index' => $i,
+                        'errors' => $e,
+                    ];
+                }
             }
-
             return response()->json([
                 'message' => 'Flashcard set uploaded successfully',
                 'error' => $invalidCards, 
