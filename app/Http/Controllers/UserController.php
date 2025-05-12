@@ -181,11 +181,11 @@ class UserController extends Controller
     public function updateAvatar(Request $request) {
         try {
             $request->validate([
-                'profile_picture' => 'required|image|mimes:jpeg,jpg|max:2048',
+                'file' => 'required|image|mimes:jpeg,jpg|max:2048',
             ]);
     
             $user = $request->user();
-            $file = $request->file('profile_picture')->store('avatar', 'local');
+            $file = $request->file('file')->store('avatar', 'local');
             $oldPath = $user->avatar;
             if ($oldPath != "avatar/default.jpg" && Storage::disk('local')->exists($oldPath)) {
                 Storage::disk('local')->delete($oldPath);
