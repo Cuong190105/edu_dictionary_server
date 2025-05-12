@@ -187,7 +187,7 @@ class UserController extends Controller
             $user = $request->user();
             $file = $request->file('file')->store('avatar', 'local');
             $oldPath = $user->avatar;
-            if ($oldPath != "avatar/default.jpg" && Storage::disk('local')->exists($oldPath)) {
+            if ($oldPath != null && Storage::disk('local')->exists($oldPath)) {
                 Storage::disk('local')->delete($oldPath);
             }
             $user->avatar = $file;
