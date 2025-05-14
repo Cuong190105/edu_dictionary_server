@@ -15,5 +15,8 @@ class FlashcardSet extends Model
         'name',
         'description',
         'cards',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 }
