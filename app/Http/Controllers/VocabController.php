@@ -174,10 +174,12 @@ class VocabController extends Controller
                         'family' => explode(SEPARATOR, $word->family),
                         'phrases' => explode(SEPARATOR, $word->phrases),
                         'created_at' => $word->created_at,
+                        'updated_at' => $word->updated_at,
                     );
                 } else {
                     $response[] = array(
                         'word_id' => $word->word_id,
+                        'updated_at' => $word->updated_at,
                         'created_at' => $word->created_at,
                         'deleted' => true,
                     );

@@ -28,7 +28,7 @@ class FlashcardController extends Controller
                     'cards.*.front' => 'string|required',
                     'cards.*.back' => 'string|required',
                     'cards.*.id' => 'string|required',
-                    'cards.*.is_learned' => 'bool|required',
+                    'cards.*.is_learned' => 'boolean|required',
                 ]);
                 if ($validator->fails()) {
                     $invalidCards[] = [
@@ -40,7 +40,7 @@ class FlashcardController extends Controller
                 $fset = FlashcardSet::where('user_id', $user_id)
                     ->where('set_id', $set['set_id'])
                     ->where('created_at', $set['created_at'])->first();
-                Log::info($fset == null);
+                Log::info($fset);
                 try {
                     if ($fset == null) {
                         FlashcardSet::create(
@@ -93,6 +93,7 @@ class FlashcardController extends Controller
                     'description' => $set->description,
                     'cards' => json_decode($set->cards, true),
                     'created_at' => $set->created_at,
+                    'updated_at' => $set->updated_at,
                 ];
             });
             return response()->json($sets);
