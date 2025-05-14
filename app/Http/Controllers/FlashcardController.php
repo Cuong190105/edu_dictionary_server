@@ -29,6 +29,7 @@ class FlashcardController extends Controller
                     'cards.*.back' => 'string|required',
                     'cards.*.id' => 'string|required',
                     'cards.*.is_learned' => 'boolean|required',
+                    'deleted' => 'boolean|required',
                 ]);
                 if ($validator->fails()) {
                     $invalidCards[] = [
@@ -55,11 +56,16 @@ class FlashcardController extends Controller
                             ]
                         );
                     } else if ($fset->updated_at < $set->updated_at) {
-                        $fset->name = $set['name'];
-                        $fset->description = $set['description'];
-                        $fset->cards = json_encode($set['cards']);
-                        $fset->updated_at = $set['updated_at'];
-                        $fset->save();
+                        if ($set->deleted) {
+                            $fset->updated_at = $set['updated_at'];
+                            $fset->delete();
+                        } else {
+                            $fset->name = $set['name'];
+                            $fset->description = $set['description'];
+                            $fset->cards = json_encode($set['cards']);
+                            $fset->updated_at = $set['updated_at'];
+                            $fset->save();
+                        }
                     }
                 } catch (Exception $e) {
                     $invalidCards[] = [
@@ -84,7 +90,7 @@ class FlashcardController extends Controller
     public function downloadCardSets(Request $request) {
         try {
             $user_id = $request->user()->id;
-            $sets = FlashcardSet::where('user_id', $user_id)
+            $sets = FlashcardSet::withTrashed()->where('user_id', $user_id)
                 ->where('updated_at', '>', $request->timestamp)
                 ->get()->map(function ($set) {
                 return [
@@ -94,6 +100,7 @@ class FlashcardController extends Controller
                     'cards' => json_decode($set->cards, true),
                     'created_at' => $set->created_at,
                     'updated_at' => $set->updated_at,
+                    'deleted' => $set->deleted_at != null,
                 ];
             });
             return response()->json($sets);
