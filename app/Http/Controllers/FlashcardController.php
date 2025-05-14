@@ -22,11 +22,13 @@ class FlashcardController extends Controller
             $invalidCards = [];
             foreach ($payload as $i => $set) {
                 $validator = Validator::make($set, [
-                    'set_id' => 'required|integer',
+                    'set_id' => 'required|string',
                     'name' => 'string|required',
                     'description' => 'string|required',
                     'cards.*.front' => 'string|required',
                     'cards.*.back' => 'string|required',
+                    'cards.*.id' => 'string|required',
+                    'cards.*.is_learned' => 'string|required',
                 ]);
                 if ($validator->fails()) {
                     $invalidCards[] = [
