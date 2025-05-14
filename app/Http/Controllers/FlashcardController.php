@@ -28,7 +28,7 @@ class FlashcardController extends Controller
                     'cards.*.front' => 'string|required',
                     'cards.*.back' => 'string|required',
                     'cards.*.id' => 'string|required',
-                    'cards.*.is_learned' => 'string|required',
+                    'cards.*.is_learned' => 'bool|required',
                 ]);
                 if ($validator->fails()) {
                     $invalidCards[] = [
