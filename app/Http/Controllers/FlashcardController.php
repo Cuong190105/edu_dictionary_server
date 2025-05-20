@@ -39,7 +39,7 @@ class FlashcardController extends Controller
                     ];
                     continue;
                 }
-                $fset = FlashcardSet::where('user_id', $user_id)
+                $fset = FlashcardSet::withTrashed()->where('user_id', $user_id)
                     ->where('set_id', $set['set_id'])
                     ->where('created_at', $set['created_at'])->first();
                 try {
@@ -57,8 +57,9 @@ class FlashcardController extends Controller
                         );
                     } else if ($fset->updated_at < $set->updated_at) {
                         if ($set->deleted) {
-                            $fset->updated_at = $set['updated_at'];
                             $fset->delete();
+                            $fset->updated_at = $set['updated_at'];
+                            $fset->save();
                         } else {
                             $fset->name = $set['name'];
                             $fset->description = $set['description'];

@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
-const MAX_CUSTOM_WORD_COUNT = 3000;
 const SEPARATOR = "|";
 
 class VocabController extends Controller
@@ -27,7 +26,7 @@ class VocabController extends Controller
                     'word_id' => 'required|string',
                     'is_deleted' => 'required|boolean',
                     'word' => 'string',
-                    'type' => 'string',
+                    'part_of_speech' => 'string',
                     'definition' => 'string',
                     'example' => 'array',
                     'example.*' => 'string',
@@ -74,35 +73,24 @@ class VocabController extends Controller
                     $word = Word::withTrashed()->where('user_id', $request->user()->id)
                         ->where('word_id', $change["word_id"])
                         ->first();
-                    if ($change['deleted']) {
+                    if ($change['is_deleted']) {
                         if ($word != null) {
                             $word->delete();
-                            $request->user()->decrement('custom_word_count');
+                            $word->updated_at = $change['updated_at'];
+                            $word->save();
                         }
                     } else {
-                        if ($word == null) {
-                            if ($request->user()->custom_word_count >= MAX_CUSTOM_WORD_COUNT) {
-                                return response()->json([
-                                    "message" => "Custom word limit reached",
-                                ], 409);
+                        if ($word != null) {
+                            $oldPaths = array($word->us_audio, $word->uk_audio, $word->image);
+                            foreach($oldPaths as $oldPath) {
+                                if ($oldPath != null && Storage::disk('local')->exists($oldPath)) {
+                                    Storage::disk('local')->delete($oldPath);
+                                }
                             }
-                            $request->user()->increment('custom_word_count');
-                        } else if ($word->updated_at > $change['updated_at']) {
-                            continue;
-                        } elseif ($word->deleted_at != null) {
-                            $word->restore();
-                            $request->user()->increment('custom_word_count');
                         }
-                        
                         $usPath = null;
                         $ukPath = null;
                         $imgPath = null;
-                        $oldPaths = array($word->us_audio, $word->uk_audio, $word->image);
-                        foreach($oldPaths as $oldPath) {
-                            if ($oldPath != null && Storage::disk('local')->exists($oldPath)) {
-                                Storage::disk('local')->delete($oldPath);
-                            }
-                        }
                         if ($usAudio[$index] ?? null != null) {
                             $usPath = $usAudio[$index]->store('usAudio', 'local');
                         }
@@ -121,9 +109,11 @@ class VocabController extends Controller
                             ],
                             [
                                 'word' => $change["word"],
-                                'type' => $change["type"],
+                                'type' => $change["part_of_speech"],
                                 'definition' => $change["definition"],
+                                // 'definition' => "TEST",
                                 'example' => implode(SEPARATOR, $change["example"]),
+                                // 'example' => "TEST",
                                 'us_ipa' => $change["us_ipa"],
                                 'uk_ipa' => $change["uk_ipa"],
                                 'us_audio' => $usPath,
@@ -163,8 +153,8 @@ class VocabController extends Controller
                         'word_id' => $word->word_id,
                         'deleted' => false,
                         'word' => $word->word,
-                        'type' => $word->type,
-                        'definition' => $word->definition,
+                        'part_of_speech' => $word->type,
+                        'definitions' => $word->definition,
                         'example' => explode(SEPARATOR, $word->example),
                         'us_ipa' => $word->us_ipa,
                         'uk_ipa' => $word->uk_ipa,
