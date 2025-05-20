@@ -23,7 +23,7 @@ class VocabController extends Controller
             $invalidWords = [];
             foreach ($changes as $index => $change) {
                 $validator = Validator::make($change, [
-                    'word_id' => 'required|int',
+                    'word_id' => 'required|string',
                     'deleted' => 'required|boolean',
                     'word' => 'string',
                     'type' => 'string',
@@ -137,6 +137,7 @@ class VocabController extends Controller
                     }
                 }
             }
+            Log::info($invalidWords);
             return response()->json([
                 "message" => "Sync finished",
                 "errors" => $invalidWords,

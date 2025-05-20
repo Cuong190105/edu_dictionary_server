@@ -41,7 +41,6 @@ class FlashcardController extends Controller
                 $fset = FlashcardSet::where('user_id', $user_id)
                     ->where('set_id', $set['set_id'])
                     ->where('created_at', $set['created_at'])->first();
-                Log::info($fset);
                 try {
                     if ($fset == null) {
                         FlashcardSet::create(
@@ -74,6 +73,7 @@ class FlashcardController extends Controller
                     ];
                 }
             }
+            Log::info ($invalidCards);
             return response()->json([
                 'message' => 'Flashcard set uploaded successfully',
                 'error' => $invalidCards, 
