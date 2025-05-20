@@ -113,10 +113,8 @@ class VocabController extends Controller
                             [
                                 'word' => $change["word"],
                                 'type' => $change["part_of_speech"],
-                                // 'definition' => $change["definition"],
-                                'definition' => "TEST",
-                                // 'example' => implode(SEPARATOR, $change["example"]),
-                                'example' => "TEST",
+                                'definition' => $change["definition"],
+                                'example' => implode(SEPARATOR, $change["example"]),
                                 'us_ipa' => $change["us_ipa"],
                                 'uk_ipa' => $change["uk_ipa"],
                                 'us_audio' => $usPath,
