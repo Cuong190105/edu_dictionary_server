@@ -16,7 +16,7 @@ class VocabController extends Controller
     public function uploadWords(Request $request) {
         try {
             $changes = json_decode($request->input('payload'), true)["change"];
-            Log::info($changes);
+            Log::info($request->all());
             $image = $request->file('media.images') ?? [];
             $usAudio = $request->file('media.usAudio') ?? [];
             $ukAudio = $request->file('media.ukAudio') ?? [];
@@ -91,14 +91,17 @@ class VocabController extends Controller
                         $usPath = null;
                         $ukPath = null;
                         $imgPath = null;
-                        if ($usAudio[$index] ?? null != null) {
-                            $usPath = $usAudio[$index]->store('usAudio', 'local');
+                        if ($usAudio[$change['word_id']] ?? null != null) {
+                            $usPath = $usAudio[$change['word_id']]->store('usAudio', 'local');
+                            Log::info('US' . $usPath);
                         }
-                        if ($ukAudio[$index] ?? null != null) {
-                            $ukPath = $ukAudio[$index]->store('ukAudio', 'local');
+                        if ($ukAudio[$change['word_id']] ?? null != null) {
+                            $ukPath = $ukAudio[$change['word_id']]->store('ukAudio', 'local');
+                            Log::info('UK' . $ukPath);
                         }
-                        if ($image[$index] ?? null != null) {
-                            $imgPath = $image[$index]->store('image', 'local');
+                        if ($image[$change['word_id']] ?? null != null) {
+                            $imgPath = $image[$change['word_id']]->store('image', 'local');
+                            Log::info('IMG' . $imgPath);
                         }
 
                         $word = Word::updateOrCreate(
@@ -110,10 +113,10 @@ class VocabController extends Controller
                             [
                                 'word' => $change["word"],
                                 'type' => $change["part_of_speech"],
-                                'definition' => $change["definition"],
-                                // 'definition' => "TEST",
-                                'example' => implode(SEPARATOR, $change["example"]),
-                                // 'example' => "TEST",
+                                // 'definition' => $change["definition"],
+                                'definition' => "TEST",
+                                // 'example' => implode(SEPARATOR, $change["example"]),
+                                'example' => "TEST",
                                 'us_ipa' => $change["us_ipa"],
                                 'uk_ipa' => $change["uk_ipa"],
                                 'us_audio' => $usPath,
