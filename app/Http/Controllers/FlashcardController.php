@@ -29,6 +29,7 @@ class FlashcardController extends Controller
                     'cards.*.back' => 'string|required',
                     'cards.*.id' => 'string|required',
                     'cards.*.is_learned' => 'boolean|required',
+                    'cards.*.is_deleted' => 'boolean|required',
                     'is_deleted' => 'boolean|required',
                 ]);
                 if ($validator->fails()) {

@@ -16,7 +16,8 @@ class VocabController extends Controller
 {
     public function uploadWords(Request $request) {
         try {
-            $changes = json_decode($request->input('payload'), true)["changes"];
+            $changes = json_decode($request->input('payload'), true)["change"];
+            Log::info($changes);
             $image = $request->file('media.images') ?? [];
             $usAudio = $request->file('media.usAudio') ?? [];
             $ukAudio = $request->file('media.ukAudio') ?? [];
@@ -24,7 +25,7 @@ class VocabController extends Controller
             foreach ($changes as $index => $change) {
                 $validator = Validator::make($change, [
                     'word_id' => 'required|string',
-                    'deleted' => 'required|boolean',
+                    'is_deleted' => 'required|boolean',
                     'word' => 'string',
                     'type' => 'string',
                     'definition' => 'string',

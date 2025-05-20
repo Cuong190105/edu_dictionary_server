@@ -327,6 +327,7 @@ class UserController extends Controller
                 'access_token' => $token,
             ]);
         } catch (ValidationException $e) {
+            Log::error($e);
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $e->errors(),
