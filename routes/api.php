@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
             "name" => $user->name,
             "email" => $user->email,
             "avatar" => $avt,
+            "streak" => $user->streak,
         ]);
     });
     Route::get('/user/avatar', [DownloadController::class, 'downloadAvatar']);
