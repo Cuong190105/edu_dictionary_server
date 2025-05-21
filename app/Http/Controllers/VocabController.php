@@ -36,10 +36,10 @@ class VocabController extends Controller
                     'antonyms' => 'array',
                     'family' => 'array',
                     'phrases' => 'array',
-                    'synonyms.*' => 'int',
-                    'antonyms.*' => 'int',
-                    'family.*' => 'int',
-                    'phrases.*' => 'int',
+                    'synonyms.*' => 'string',
+                    'antonyms.*' => 'string',
+                    'family.*' => 'string',
+                    'phrases.*' => 'string',
                 ]);
                 $validator->after(function ($validator) use ($image, $usAudio, $ukAudio, $index) {
                     if (array_key_exists($index, $image)) {

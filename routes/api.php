@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function (){
-    Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/user', function (Request $request) {
         $user = $request->user();
         $avt = $user->avatar;
@@ -45,6 +44,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/verify-reset', function(Request $request) {
     $key = $request->code.$request->email;
     if(!Cache::has($key)) {
