@@ -102,7 +102,7 @@ class FlashcardController extends Controller
                     'cards' => json_decode($set->cards, true),
                     'created_at' => $set->created_at,
                     'updated_at' => $set->updated_at,
-                    'deleted' => $set->deleted_at != null,
+                    'is_deleted' => $set->deleted_at != null,
                 ];
             });
             return response()->json($sets);

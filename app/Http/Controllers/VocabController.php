@@ -149,34 +149,25 @@ class VocabController extends Controller
                 ->get();
             $response = array();
             foreach($words as $word) {
-                if ($word->deleted_at == NULL) {
-                    $response[] = array(
-                        'word_id' => $word->word_id,
-                        'deleted' => false,
-                        'word' => $word->word,
-                        'part_of_speech' => $word->type,
-                        'definitions' => $word->definition,
-                        'example' => explode(SEPARATOR, $word->example),
-                        'us_ipa' => $word->us_ipa,
-                        'uk_ipa' => $word->uk_ipa,
-                        'us_audio' => $word->us_audio != null,
-                        'uk_audio' => $word->uk_audio != null,
-                        'image' => $word->image != null,
-                        'synonyms' => explode(SEPARATOR, $word->synonyms),
-                        'antonyms' => explode(SEPARATOR, $word->antonyms),
-                        'family' => explode(SEPARATOR, $word->family),
-                        'phrases' => explode(SEPARATOR, $word->phrases),
-                        'created_at' => $word->created_at,
-                        'updated_at' => $word->updated_at,
-                    );
-                } else {
-                    $response[] = array(
-                        'word_id' => $word->word_id,
-                        'updated_at' => $word->updated_at,
-                        'created_at' => $word->created_at,
-                        'deleted' => true,
-                    );
-                }
+                $response[] = array(
+                    'word_id' => $word->word_id,
+                    'is_deleted' => $word->deleted_at != null ? true : false,
+                    'word' => $word->word,
+                    'part_of_speech' => $word->type,
+                    'definition' => $word->definition,
+                    'example' => explode(SEPARATOR, $word->example),
+                    'us_ipa' => $word->us_ipa,
+                    'uk_ipa' => $word->uk_ipa,
+                    'us_audio' => $word->us_audio != null,
+                    'uk_audio' => $word->uk_audio != null,
+                    'image' => $word->image != null,
+                    'synonyms' => explode(SEPARATOR, $word->synonyms),
+                    'antonyms' => explode(SEPARATOR, $word->antonyms),
+                    'family' => explode(SEPARATOR, $word->family),
+                    'phrases' => explode(SEPARATOR, $word->phrases),
+                    'created_at' => $word->created_at,
+                    'updated_at' => $word->updated_at,
+                );
             }
             return response()->json($response);
         } catch (Exception $e) {
